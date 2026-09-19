@@ -1,0 +1,35 @@
+# What the notebook needs, and why each line is here.
+#
+#   pip install -r requirements.txt
+
+# The client, the slide reader and the tile tooling, plus the `embed` extra:
+# the runtime that lets DeepSpot-H run on this machine. Without that extra
+# nothing here runs a model at all, and the package says so by name rather than
+# failing obscurely. The extra resolves a tensor stack, which is gigabytes and
+# specific to the machine it was built for; everything else is small.
+#
+# The package is at a pre-release version and pip resolves it without a flag.
+auroraomics[embed]
+
+# The figures. The package needs none of this; the notebook draws with it.
+matplotlib>=3.6
+
+# The front end. Drop this line if you already have one.
+jupyterlab>=4
+
+
+# ---------------------------------------------------------------------------
+# On a machine with no GPU
+#
+# Ask for the CPU build of the tensor runtime as well. It is several gigabytes
+# smaller and it runs the same notebook:
+#
+#   pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+#
+# A GPU is used when there is one. Without one the run is slower, and it runs.
+#
+# Nothing else is needed. The weights DeepSpot-H runs are fetched once, from
+# wherever the service pins them, and cached on this machine; `auroraomics
+# doctor --model <id>` reports whether they are already here and times a pass
+# before you commit to a slide.
+# ---------------------------------------------------------------------------
