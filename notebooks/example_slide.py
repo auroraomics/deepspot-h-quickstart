@@ -3,22 +3,17 @@
 The archive on Zenodo holds eight slides and their assays and is about two
 gigabytes. This notebook needs one slide out of it. Zip keeps a directory of
 its members at the end of the file, and Zenodo serves ranged requests, so the
-directory can be read on its own and then one member pulled out by its byte
-span and inflated as it arrives. Five requests, and about a tenth of the
+directory can be read on its own, and one member pulled out by its byte span
+and inflated as it arrives. Five requests, and about a tenth of the
 archive crosses the wire.
 
-Nothing here is specific to Aurora. It is here so the first cell of the
-notebook is a slide rather than a coffee break.
+Nothing here is specific to Aurora.
 
 The data
 --------
-Dawo, S., Nonchev, K., and Silina, K. (2025). *10x Visium Spatial
+Dawo, S., Nonchev, K., & Silina, K. (2025). *10x Visium Spatial
 Transcriptomics Dataset: Kidney (3) and Lung (5) Cancer with Tertiary Lymphoid
-Structures*. Zenodo. https://doi.org/10.5281/zenodo.14620362
-
-Published under Creative Commons Attribution 4.0 International (CC BY 4.0):
-https://creativecommons.org/licenses/by/4.0/. You may use it, including
-commercially, if you credit the authors as above.
+Structures* [Data set]. Zenodo. https://doi.org/10.5281/zenodo.14620362
 """
 
 from __future__ import annotations
@@ -43,12 +38,10 @@ ARCHIVE = "TLS_VISIUM_USZ.zip"
 """The record's one file."""
 
 CITATION = (
-    "Dawo, S., Nonchev, K., and Silina, K. (2025). 10x Visium Spatial "
+    "Dawo, S., Nonchev, K., & Silina, K. (2025). 10x Visium Spatial "
     "Transcriptomics Dataset: Kidney (3) and Lung (5) Cancer with Tertiary "
-    f"Lymphoid Structures. Zenodo. https://doi.org/{DOI}"
+    f"Lymphoid Structures [Data set]. Zenodo. https://doi.org/{DOI}"
 )
-
-LICENCE = "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)"
 
 SLIDE_MEMBER = "TLS_VISIUM_USZ/tif_slides/LC1.tif"
 """The lung-cancer section this notebook runs on."""
@@ -230,11 +223,11 @@ def fetch_member(
 
     Five requests in all, none of them large but the last: the record's
     published size, the archive's last 65 KB, the member directory, the
-    member's own thirty-byte header, and then the member.
+    member's own thirty-byte header, and the member itself.
     """
     destination = Path(destination)
     if destination.exists():
-        progress(f"{destination} is already here; nothing fetched.")
+        progress(f"{destination.name} is already here; nothing fetched.")
         return destination
 
     url = url or content_url()
@@ -290,11 +283,10 @@ def fetch_member(
             f"says {entry.size} bytes and {entry.crc:08x}. Nothing was written."
         )
     partial.replace(destination)
-    progress(f"  wrote {destination} ({_mb(written)}), checksum verified.")
+    progress(f"  wrote {destination.name} ({_mb(written)}), checksum verified.")
     return destination
 
 
 if __name__ == "__main__":
     print(CITATION)
-    print("Licence:", LICENCE)
     fetch_member(SLIDE_MEMBER, Path(sys.argv[1] if len(sys.argv) > 1 else "LC1.tif"))
