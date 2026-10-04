@@ -1,0 +1,17 @@
+# What the notebook needs.
+#
+#   pip install -r requirements.txt
+#
+# On a machine with no GPU, ask for the CPU build as well:
+#
+#   pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+# The package, with the `embed` extra that runs DeepSpot-H on this machine.
+# The notebook is written against this release or later.
+auroraomics[embed]>=0.1.0.dev3
+
+# The figures.
+matplotlib>=3.6
+
+# The notebook front end. Drop this line if you already have one.
+jupyterlab>=4

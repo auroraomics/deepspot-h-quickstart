@@ -1,0 +1,30 @@
+# Slides and results are fetched or produced, never committed. The example
+# archive alone is two gigabytes and the one slide taken out of it is 300 MB.
+notebooks/data/
+*.part
+
+# Slide formats, wherever they land.
+*.tif
+*.tiff
+*.svs
+*.ndpi
+*.mrxs
+*.scn
+
+# What the notebook writes, and what the other half writes back.
+*.npz
+*.h5ad
+
+# Archives. The published example is one, and so is a tile archive.
+*.zip
+
+# Notebook and Python noise.
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+
+# Environments and credentials. A key belongs in neither.
+.venv/
+venv/
+.env
+.env.local
